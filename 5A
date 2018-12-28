@@ -1,0 +1,43 @@
+create table Aircraft(Aircraft_ID int primary key,Aircraft_name varchar(255),Cruising_range int);
+create table Employee(Emp_ID int primary key,Ename varchar(255),Salary int);
+create table Certified(empid int references Employee(Emp_ID),airid int references Aircraft(Aircraft_ID));
+
+insert into Aircraft values(1,'A',15000);
+insert into Aircraft values(2,'B',25000);
+insert into Aircraft values(3,'C',36000);
+insert into Aircraft values(4,'D',49000);
+insert into Aircraft values(5,'E',20000);
+
+insert into Employee values(1,'E1',18000);
+insert into Employee values(2,'E2',30000);
+insert into Employee values(3,'E3',60000);
+insert into Employee values(4,'E4',19000);
+insert into Employee values(5,'E5',10000);
+
+insert into Certified values(1,1);
+insert into Certified values(2,3);
+insert into Certified values(2,4);
+insert into Certified values(3,4);
+insert into Certified values(3,3);
+insert into Certified values(3,2);
+insert into Certified values(4,3);
+insert into Certified values(5,1);
+
+select Ename 
+from Employee 
+where Emp_ID in (select empid from Certified,Aircraft where airid = Aircraft_ID and Aircraft_name = 'B');
+
+select Aircraft_ID 
+from Aircraft 
+order by Cruising_range ASC;
+
+select Ename 
+from Employee 
+where Emp_ID in (select empid  
+  from Certified 
+  where airid in(select Aircraft_ID 
+    from Aircraft 
+    where Cruising_range > 30000  
+      and Aircraft_name not like 'B%'));
+
+
