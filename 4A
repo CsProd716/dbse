@@ -1,0 +1,39 @@
+create table supplier(Sid int primary key,Sname varchar(255),Address varchar(255));
+create table part(Pid int primary key,Pname varchar(255),Colour varchar(20));
+create table shipment(sid int references supplier(Sid),pid int references part(Pid),cost int);
+
+insert into supplier values(1,'A','ABC');
+insert into supplier values(2,'B','BBC');
+insert into supplier values(3,'C','CBC');
+insert into supplier values(4,'D','DBC');
+insert into supplier values(5,'E','EBC');
+
+insert into part values(1,'P1','green');
+insert into part values(2,'P2','black');
+insert into part values(3,'P3','blue');
+insert into part values(4,'P4','red');
+insert into part values(5,'P5','green');
+
+insert into shipment values(1,5,25000);
+insert into shipment values(1,2,23000);
+insert into shipment values(5,3,30000);
+insert into shipment values(2,5,25000);
+insert into shipment values(3,4,19000);
+insert into shipment values(2,5,25000);
+insert into shipment values(3,2,23000);
+insert into shipment values(5,2,23000);
+insert into shipment values(4,3,30000);
+insert into shipment values(2,1,5000);
+
+select distinct sid 
+from shipment 
+where pid in (select Pid from part where Colour like 'green%');
+
+select distinct Sname,count(*) 
+from supplier,shipment 
+where supplier.Sid = shipment.sid 
+group by shipment.sid;
+
+update part 
+set Colour = 'yellow' 
+where Pid in (select pid from shipment where sid = 3);
