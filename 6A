@@ -1,0 +1,32 @@
+create table Employee(Fname varchar(50),Lname varchar(50),SSN varchar(10) primary key,Addrs varchar(255),Sex varchar(6),Salary int,SuperSSN varchar(10),Dno int);
+create table Department(Dname varchar(100),Dnumber int primary key,MgrSSN varchar(10),MgrStartDate date);
+create table Dependent(dname varchar(100) references Department(Dname),Essn varchar(10) references Employee(SSN));
+
+insert into Employee values('A','Z','1','Q','m',12000,'4',5);
+insert into Employee values('S','X','2','W','m',52000,'5',4);
+insert into Employee values('D','C','3','E','f',80000,'2',1);
+insert into Employee values('F','V','4','R','f',14000,'3',3);
+insert into Employee values('G','B','5','T','m',15000,'1',2);
+
+insert into Department values('tech',1,'2','2018-02-10');
+insert into Department values('p',3,'3','2018-02-10');
+insert into Department values('o',2,'1','2018-02-10');
+insert into Department values('i',4,'5','2018-02-10');
+insert into Department values('u',5,'4','2018-02-10');
+
+insert into Dependent values('tech','2');
+insert into Dependent values('p','3');
+insert into Dependent values('o','1');
+insert into Dependent values('i','5');
+insert into Dependent values('u','4');
+
+select Dname,avg(salary) 
+from Department,Employee;
+
+select Fname,Lname
+    -> from employee
+    -> where SSN in (select SuperSSN from Employee);
+    
+ select *
+    -> from department
+    -> where Dname like '%tech%';
