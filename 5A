@@ -31,6 +31,7 @@ select Aircraft_ID
 from Aircraft 
 order by Cruising_range ASC;
 
+//not correct
 select Ename 
 from Employee 
 where Emp_ID in (select empid  
